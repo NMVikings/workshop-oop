@@ -28,9 +28,9 @@ class Atom {
     return `<${tagName}>${content}</${tagName}>`;
   }
 
-  renderLink(props) {
+  renderLink(linkData) {
     const stringifyProps = props => Object.keys(props).map(key => `${key}="${props[key]}"`).join(' ');
-    return `<link ${stringifyProps(props)} />`;
+    return `<link ${stringifyProps(linkData)} />`;
   }
 
   render(ast) {

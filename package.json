@@ -7,6 +7,7 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.4.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
@@ -17,8 +18,10 @@
     "regenerator-runtime": "^0.12.0"
   },
   "scripts": {
-    "eslint": "eslint src/",
-    "test": "jest"
+    "eslint": "eslint",
+    "test": "jest",
+    "babel-node": "babel-node",
+    "build": "babel src --out-dir dist --source-maps inline"
   },
   "dependencies": {
     "commander": "^2.16.0",
