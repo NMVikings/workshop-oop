@@ -1,11 +1,11 @@
 import program from 'commander';
-import FeedConvertor from '../ConvertFeed';
+import FeedConvertor from '..';
 
 program.version('0.0.1')
   .arguments('<source>')
-  .action((source) => {
+  .action(async (source) => {
     const Convertor = new FeedConvertor();
-    const result = Convertor.convert(source);
+    const result = await Convertor.convert(source);
 
     console.log(result);
   })

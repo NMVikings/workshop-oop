@@ -2,7 +2,7 @@ install:
 	npm install
 
 run:
-	npm run babel-node -- 'src/bin/index.js' test2.atom
+	npm run babel-node -- 'src/bin/index.js' https://web-standards.ru/podcast/feed/
 
 build:
 	rm -rf dist

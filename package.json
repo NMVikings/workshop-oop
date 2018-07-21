@@ -26,6 +26,7 @@
     "build": "babel src --out-dir dist --source-maps inline"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "commander": "^2.16.0",
     "feedme": "^1.2.0"
   }

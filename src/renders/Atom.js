@@ -1,7 +1,7 @@
 export default class Atom {
   astToAtom = (ast) => {
     const nodeRenderers = {
-      link: linksData => linksData.map(this.renderLink).join(''),
+      link: linksData => Array.isArray(linksData) ? linksData.map(this.renderLink).join('') : this.renderLink(linksData),
       items: itemsData => `<entry>${itemsData.map(this.astToAtom)}</entry>`,
       default: this.renderTag,
     };
@@ -37,4 +37,3 @@ export default class Atom {
     ].join('');
   }
 }
-
