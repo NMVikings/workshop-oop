@@ -1,12 +1,5 @@
-class Atom {
-  constructor() {
-    this.render = this.render.bind(this);
-    this.astToAtom = this.astToAtom.bind(this);
-    this.renderTag = this.renderTag.bind(this);
-    this.renderLink = this.renderLink.bind(this);
-  }
-
-  astToAtom(ast) {
+export default class Atom {
+  astToAtom = (ast) => {
     const nodeRenderers = {
       link: linksData => linksData.map(this.renderLink).join(''),
       items: itemsData => `<entry>${itemsData.map(this.astToAtom)}</entry>`,
@@ -20,7 +13,7 @@ class Atom {
     ).join('');
   }
 
-  renderTag(tagName, content) {
+  renderTag = (tagName, content) => {
     if (typeof content === 'object') {
       return `<${tagName}>${this.astToAtom(content)}</${tagName}>`;
     }
@@ -28,12 +21,12 @@ class Atom {
     return `<${tagName}>${content}</${tagName}>`;
   }
 
-  renderLink(linkData) {
+  renderLink = (linkData) => {
     const stringifyProps = props => Object.keys(props).map(key => `${key}="${props[key]}"`).join(' ');
     return `<link ${stringifyProps(linkData)} />`;
   }
 
-  render(ast) {
+  render = (ast) => {
     const xmlHeader = '<?xml version="1.0" encoding="utf-8"?>';
     const atomHeader = '<feed xmlns="http://www.w3.org/2005/Atom">';
     return [
@@ -45,4 +38,3 @@ class Atom {
   }
 }
 
-module.exports = Atom;

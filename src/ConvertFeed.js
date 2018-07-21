@@ -1,23 +1,18 @@
-
-const FeedMe = require('feedme');
-const fs = require('fs');
-const Atom = require('./renders/Atom');
+import Atom from './renders/Atom';
+import Parser from './Parser';
+import Reader from './Reader';
 
 export default class Converter {
   convert(pathToFile) {
     //read file
-    const file = fs.readFileSync(pathToFile, 'utf-8');
+    const file = new Reader('utf-8').read(pathToFile);
 
     //parse xml
-    const parser = new FeedMe(true);
-    parser.write(file);
-    const { type, ...ast } = parser.done();
+    const { type, ...ast } = new Parser().parse(file);
 
 
     //renderAtom
-    const AtomRender = new Atom();
-
-    const res = AtomRender.render(ast);
+    const res = new Atom().render(ast);
 
     return res;
   }
