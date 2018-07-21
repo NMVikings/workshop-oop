@@ -1,6 +1,7 @@
 const program = require('commander');
 const FeedMe = require('feedme');
 const fs = require('fs');
+const Atom = require('./renders/Atom');
 
 
 program.parse(process.argv);
@@ -16,45 +17,12 @@ const { type, ...ast } = parser.done();
 
 
 //renderAtom
-const renderTag = (tagName, content) => {
-  console.log(tagName)
-  if (typeof content === 'object') {
-    return `<${tagName}>${astToAtom(content)}</${tagName}>`;
-  }
+const AtomRender = new Atom();
 
-  return `<${tagName}>${content}</${tagName}>`;
-};
-const stringifyProps = props => Object.keys(props).map(key => `${key}="${props[key]}"`).join(' ');
-const renderLink = props => `<link ${stringifyProps(props)} />`;
+const res = AtomRender.render(ast);
 
-const nodeRenderers = {
-  link: linksData => linksData.map(renderLink),
-  items: itemsData => `<entry>${itemsData.map(astToAtom)}</entry>`,
-  default: renderTag,
-};
+console.log(res);
 
-const astToAtom = ast => Object.keys(ast).map(
-  key => key in nodeRenderers
-    ? nodeRenderers[key](ast[key])
-    : nodeRenderers.default(key, ast[key])
-).join('');
-
-
-const renderAtom = (ast) => {
-  const xmlHeader = '<?xml version="1.0" encoding="utf-8"?>';
-  const atomHeader = '<feed xmlns="http://www.w3.org/2005/Atom">';
-  const res = [
-    xmlHeader,
-    atomHeader,
-    astToAtom(ast),
-    '</feed>'
-  ].join('');
-
-
-  const aparser = new FeedMe(true);
-  aparser.write(res);
-  return aparser.done();
-};
 
 //staff
 
@@ -62,7 +30,3 @@ const renderAtom = (ast) => {
 
 // console.log(ast);
 // console.log(res);
-
-module.exports = {
-  renderAtom,
-};
