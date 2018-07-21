@@ -1,9 +1,9 @@
 import fs from 'fs';
 
 export default class FileReader {
-  constructor(format) {
-    this.format = format;
+  constructor(source) {
+    this.source = source;
   }
 
-  read = pathToFile => fs.readFile(pathToFile, this.format);
+  read = () => fs.readFile(this.source, 'utf-8');
 }
