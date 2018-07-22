@@ -5,6 +5,10 @@ import XmlParser from './XmlParser';
 
 
 export default class Converter {
+  constructor({ transformers }) {
+    this.transformers = transformers;
+  }
+
   convert = async (source, format = 'atom') => {
     const file = await getReader(source).read();
 
