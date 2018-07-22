@@ -1,16 +1,20 @@
 import getRender from './renders';
-import Parser from './Parser';
+import getParser from './parsers';
 import getReader from './readers';
+import XmlParser from './XmlParser'
 
 export default class Converter {
   convert = async (source, format = 'atom') => {
     const file = await getReader(source).read();
 
     //parse xml
-    const { type, ...ast } = new Parser().parse(file);
+    const { type, ...ast } = new XmlParser().parse(file);
+
+    //parse to ast
+    const data = getParser(type).parse(ast);
 
     //renderAtom
-    const res = getRender(format).render(ast);
+    const res = getRender(format).render(data);
 
     return res;
   }
