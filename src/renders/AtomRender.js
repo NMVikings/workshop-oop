@@ -1,4 +1,4 @@
-export default class Atom {
+export default class AtomRender {
   astToAtom = (ast) => {
     const nodeRenderers = {
       link: linksData => Array.isArray(linksData) ? linksData.map(this.renderLink).join('') : this.renderLink(linksData),

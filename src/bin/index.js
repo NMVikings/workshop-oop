@@ -2,10 +2,11 @@ import program from 'commander';
 import FeedConvertor from '..';
 
 program.version('0.0.1')
-  .arguments('<source>')
-  .action(async (source) => {
+  .arguments('<format> <source>')
+  .option('--out', 'Choose format')
+  .action(async (format, source) => {
     const Convertor = new FeedConvertor();
-    const result = await Convertor.convert(source);
+    const result = await Convertor.convert(source, format);
 
     console.log(result);
   })
