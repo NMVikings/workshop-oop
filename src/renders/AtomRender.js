@@ -1,8 +1,16 @@
 export default class AtomRender {
+  constructor() {
+    this.dictionary = {
+      description: 'summary'
+    };
+  }
+
   astToAtom = (ast) => {
     const nodeRenderers = {
-      link: linksData => Array.isArray(linksData) ? linksData.map(this.renderLink).join('') : this.renderLink(linksData),
+      link: linkData => this.renderLink(linkData),
       items: itemsData => `<entry>${itemsData.map(this.astToAtom)}</entry>`,
+      pubdate: date => this.renderTag('pubdate', new Date(date).toISOString()),
+      updated: date => this.renderTag('updated', new Date(date).toISOString()),
       default: this.renderTag,
     };
 
@@ -13,7 +21,8 @@ export default class AtomRender {
     ).join('');
   }
 
-  renderTag = (tagName, content) => {
+  renderTag = (key, content) => {
+    const tagName = this.dictionary[key] || key;
     if (typeof content === 'object') {
       return `<${tagName}>${this.astToAtom(content)}</${tagName}>`;
     }

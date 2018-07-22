@@ -9,5 +9,6 @@ program.version('0.0.1')
     const result = await Convertor.convert(source, format);
 
     console.log(result);
+    console.log('END')
   })
   .parse(process.argv);

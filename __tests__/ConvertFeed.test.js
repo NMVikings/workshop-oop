@@ -12,7 +12,7 @@ test('test.atom file', async () => {
 });
 
 test('test.rss file', async () => {
-  const filePath = '__tests__/__fixtures__/test2.rss';
+  const filePath = '__tests__/__fixtures__/test.rss';
   const file = fs.readFileSync(filePath, 'utf-8');
 
   const result = await new ConvertFeed().convert(filePath, 'rss');

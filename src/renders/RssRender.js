@@ -1,11 +1,19 @@
 export default class RssRender {
+  constructor() {
+    this.dictionary = {
+      subtitle: 'description',
+      id: 'guid',
+      pubdate: 'pubDate',
+      updated: 'lastBuildDate',
+    };
+  }
+
   astToRss = (ast) => {
     const nodeRenderers = {
       items: itemsData => itemsData.map(itemAst => `<item>${this.astToRss(itemAst)}</item>`).join(''),
-      pubdate: content => `<pubDate>${content}</pubDate>`,
-      lastbuilddate: content => `<lastBuildDate>${content}</lastBuildDate>`,
-      managingeditor: content => `<managingEditor>${content}</managingEditor>`,
-      webmaster: content => `<webMaster>${content}</webMaster>`,
+      link: ({ href }) => this.renderTag('link', href),
+      pubdate: date => this.renderTag('pubdate', new Date(date).toUTCString()),
+      updated: date => this.renderTag('updated', new Date(date).toUTCString()),
       default: this.renderTag,
     };
 
@@ -16,7 +24,8 @@ export default class RssRender {
     ).join('');
   }
 
-  renderTag = (tagName, content) => {
+  renderTag = (key, content) => {
+    const tagName = this.dictionary[key] || key;
     if (typeof content === 'object') {
       return `<${tagName}>${this.astToRss(content)}</${tagName}>`;
     }
