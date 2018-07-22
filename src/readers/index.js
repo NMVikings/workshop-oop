@@ -4,7 +4,7 @@ import HttpReader from './HttpReader';
 const getReader = (source) => {
   const Reader = source.startsWith('http') ? HttpReader : FileReader;
 
-  return new Reader(source);
+  return new Reader();
 };
 
 export default getReader;

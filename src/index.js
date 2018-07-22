@@ -10,7 +10,8 @@ export default class Converter {
   }
 
   convert = async (source, format = 'atom') => {
-    const file = await getReader(source).read();
+    const Reader = getReader(source);
+    const file = await Reader.read(source);
 
     //parse xml
     const { type, ...ast } = await new XmlParser().parse(file);
